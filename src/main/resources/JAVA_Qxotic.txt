@@ -1,0 +1,31 @@
+Question one. What are the latest features in Java twenty seven?
+
+Answer. Java twenty seven came out on September fifteenth, twenty twenty six. It is a short term release with nine J E Ps, and it focuses on memory and performance defaults, not new syntax.
+
+The two big changes are these. G one is now the default garbage collector everywhere, even in small containers. And compact object headers are now the default, shrinking each object header from ninety six bits to sixty four bits, which saves heap memory. Both apply without any code changes.
+
+It also adds post quantum key exchange for T L S one point three, and lets Flight Recorder redact sensitive data.
+
+Question two. What are the top features from the last two years for memory, C P U, performance and native images?
+
+Answer. There are four main ones.
+
+First, compact object headers. They were experimental in Java twenty four, became a product feature in Java twenty five, and are the default in Java twenty seven. The J E P measured about twenty two percent less heap and eight percent less C P U on one benchmark.
+
+Second, the ahead of time cache from Project Leyden. In Java twenty four, it cached class loading and linking, with about forty percent faster startup in early tests. In Java twenty five, it added method profiling, and one community benchmark showed twenty six to thirty two percent faster boot.
+
+Third, G one as the universal default garbage collector in Java twenty seven.
+
+Fourth, Scoped Values, which became final in Java twenty five. They are a cheaper alternative to ThreadLocal.
+
+For native images, the Open J D K has no built in feature. The Leyden cache is the closest option, but GraalVM native image still starts faster, though it cannot support runtime class loading.
+
+For Spring and Tomcat services, upgrading to Java twenty seven gives you compact headers and G one for free, so benchmark before you switch.
+
+Question three. What is Qxotic dot A I?
+
+Answer. Qxotic dot A I, branded Quixotic A I, is a Swiss open source project for running artificial intelligence directly on the Java Virtual Machine. Its tagline is: finally, A I in a jar.
+
+It runs language models, vision, embeddings and text to speech inside a Java application, with no Python, no O N N X bridge, and no Docker sidecar.
+
+Its main parts are jinfer, the inference engine with Spring A I and LangChain four J integrations, plus tokenizers, fast matrix math, and pure Java readers for G G U F and Safetensors model files. It also supports GraalVM native image for a single fast starting binary.

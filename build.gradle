@@ -1,0 +1,66 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '4.1.1'
+	id 'io.spring.dependency-management' version '1.1.7'
+    id 'org.jetbrains.gradle.plugin.idea-ext' version '1.1.8'
+}
+
+group = 'com.locallm'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(27)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+def jvmFlags = [
+        '--add-modules', 'jdk.incubator.vector',
+        '--enable-native-access=ALL-UNNAMED'
+]
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+    implementation(platform("com.qxotic:jinfer-bom:0.3.1"))
+
+    implementation("com.qxotic:jinfer-spring-ai")
+    implementation("com.qxotic:jinfer-models-all")
+    implementation("com.qxotic:jinfer-kokoro")
+    implementation("com.qxotic:jam-native")
+    implementation("com.qxotic:jam-vector")
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs.addAll(['--add-modules', 'jdk.incubator.vector'])
+}
+
+tasks.named('bootRun') {
+    jvmArgs jvmFlags
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+idea.project.settings {
+    // Option A: make the Run button go through Gradle (bootRun)
+//    delegateActions {
+//        delegatedBuild = true
+//        testRunner = 'GRADLE'
+//    }
+
+    // Option B: define a run configuration with the VM options
+//    runConfigurations {
+//        'QxoticAI'(org.jetbrains.gradle.ext.Application) {
+//            mainClass = 'com.locallm.QxoticAiApplication'   // replace with your main class
+//            moduleName = 'locallm.main'                 // replace with your IntelliJ module name
+//            jvmArgs = '--add-modules jdk.incubator.vector --enable-native-access=ALL-UNNAMED'
+//        }
+//    }
+}
